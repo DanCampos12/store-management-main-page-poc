@@ -1,5 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import UserListComponent from '@/components/UserListComponent.vue'
+import { Mutation, State } from 'vuex-class'
+import { User } from '@/models'
 
 @Component({
   components: {
@@ -7,5 +9,13 @@ import UserListComponent from '@/components/UserListComponent.vue'
   }
 })
 export default class Home extends Vue {
+  @State('users') readonly users!: User[]
+  @Mutation('addUser') readonly $addUser!: (user: User) => void
 
+  addUser (): void {
+    this.$addUser({
+      id: this.users.length,
+      name: `User - ${this.users.length + 1}`
+    })
+  }
 }
