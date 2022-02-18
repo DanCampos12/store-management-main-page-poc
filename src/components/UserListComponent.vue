@@ -1,6 +1,6 @@
 <template>
   <div class="user-list--content">
-    <div class="user-list-title--label">Lista de Usuários:</div>
+    <div class="user-list-title--label">Usuários</div>
     <div class="scroller users--content">
       <div
         class="user-name--label"
