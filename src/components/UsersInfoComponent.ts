@@ -3,5 +3,5 @@ import { State } from 'vuex-class'
 
 @Component
 export default class UsersInfoComponent extends Vue {
-  @State('assetCounter') readonly assetCounter!: number
+  @State('userCounter') readonly userCounter!: number
 }

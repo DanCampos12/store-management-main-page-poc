@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    assetCounter: 0
+    userCounter: 3
   },
   mutations: {
-    setAssetCounter (state, value: number) {
-      state.assetCounter = value
+    setUserCounter (state, value: number) {
+      state.userCounter = value
     }
   },
   actions: {

@@ -15,7 +15,7 @@
           Número de usuários cadastrados na aplicação:
         </div>
         <div class="asset-counter--label">
-          {{ assetCounter }}
+          {{ userCounter }}
         </div>
       </v-card-text>
     </v-card>
