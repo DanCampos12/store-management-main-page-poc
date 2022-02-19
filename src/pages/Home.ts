@@ -12,6 +12,7 @@ export default class Home extends Vue {
   @State('userCounter') readonly userCounter!: number
   @Mutation('setUserCounter') readonly setUserCounter!: (value: number) => void
 
+  iFrameLoaded = false
   userCounterControler: Record<string, Function> = {
     'user:added': () => true,
     'user:removed': () => true
@@ -30,5 +31,9 @@ export default class Home extends Vue {
   onMessageReceived (message: MessageEvent): void {
     if (!Object.keys(this.userCounterControler).includes(message.data)) return
     this.userCounterControler[message.data]()
+  }
+
+  onIframeLoad (): void {
+    this.iFrameLoaded = true
   }
 }
