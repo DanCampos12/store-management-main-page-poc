@@ -1,21 +1,34 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Component, Vue } from 'vue-property-decorator'
-import UserListComponent from '@/components/UserListComponent.vue'
+import UsersInfoComponent from '@/components/UsersInfoComponent.vue'
 import { Mutation, State } from 'vuex-class'
-import { User } from '@/models'
 
 @Component({
   components: {
-    UserListComponent
+    UsersInfoComponent
   }
 })
 export default class Home extends Vue {
-  @State('users') readonly users!: User[]
-  @Mutation('addUser') readonly $addUser!: (user: User) => void
+  @State('userCounter') readonly userCounter!: number
+  @Mutation('setUserCounter') readonly setUserCounter!: (value: number) => void
 
-  addUser (): void {
-    this.$addUser({
-      id: this.users.length,
-      name: `User - ${this.users.length + 1}`
-    })
+  userCounterControler: Record<string, Function> = {
+    'user:added': () => true,
+    'user:removed': () => true
+  }
+
+  mounted (): void {
+    this.userCounterControler['user:added'] = () => { this.setUserCounter(this.userCounter + 1) }
+    this.userCounterControler['user:removed'] = () => { this.setUserCounter(this.userCounter - 1) }
+    window.addEventListener('message', this.onMessageReceived)
+  }
+
+  beforeDestroy (): void {
+    window.removeEventListener('message', this.onMessageReceived)
+  }
+
+  onMessageReceived (message: MessageEvent): void {
+    if (!Object.keys(this.userCounterControler).includes(message.data)) return
+    this.userCounterControler[message.data]()
   }
 }
