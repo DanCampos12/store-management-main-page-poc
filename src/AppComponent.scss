@@ -1,7 +1,20 @@
+body {
+  background: #515154;
+}
+
 .app {
+  font-family: 'Roboto';
   max-width: 1366px;
-  height: 100vh;
+  height: calc(100vh - 90px);
   margin: auto;
+  .main-aplication-title--label {
+    height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 40px;
+  }
 }
 
 .scroller {
