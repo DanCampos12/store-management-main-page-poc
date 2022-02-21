@@ -12,7 +12,7 @@
       </div>
       <iframe
         :class="{ 'd-none': !iFrameLoaded }"
-        src="http://localhost:8081/"
+        src="http://meuportfolio.local/app2"
         width="100%"
         height="440"
         scrolling="no"

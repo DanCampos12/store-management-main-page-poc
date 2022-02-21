@@ -13,25 +13,34 @@ export default class Home extends Vue {
   @Mutation('setUserCounter') readonly setUserCounter!: (value: number) => void
 
   iFrameLoaded = false
+
+  broadcast = new BroadcastChannel('user-list')
+
   userCounterControler: Record<string, Function> = {
     'user:added': () => true,
     'user:removed': () => true
   }
 
   mounted (): void {
-    this.userCounterControler['user:added'] = () => { this.setUserCounter(this.userCounter + 1) }
-    this.userCounterControler['user:removed'] = () => { this.setUserCounter(this.userCounter - 1) }
-    window.addEventListener('message', this.onMessageReceived)
+    this.broadcast.onmessage = (message) => {
+      console.log(message)
+    }
   }
 
-  beforeDestroy (): void {
-    window.removeEventListener('message', this.onMessageReceived)
-  }
+  // mounted (): void {
+  //   this.userCounterControler['user:added'] = () => { this.setUserCounter(this.userCounter + 1) }
+  //   this.userCounterControler['user:removed'] = () => { this.setUserCounter(this.userCounter - 1) }
+  //   window.addEventListener('message', this.onMessageReceived)
+  // }
 
-  onMessageReceived (message: MessageEvent): void {
-    if (!Object.keys(this.userCounterControler).includes(message.data)) return
-    this.userCounterControler[message.data]()
-  }
+  // beforeDestroy (): void {
+  //   window.removeEventListener('message', this.onMessageReceived)
+  // }
+
+  // onMessageReceived (message: MessageEvent): void {
+  //   if (!Object.keys(this.userCounterControler).includes(message.data)) return
+  //   this.userCounterControler[message.data]()
+  // }
 
   onIframeLoad (): void {
     this.iFrameLoaded = true
