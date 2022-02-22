@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userCounter: 3,
+    userCounter: 0,
     userListBroadcast: new BroadcastChannel('user-list'),
     userCounterControlers: new UserCounterControlers()
   },
@@ -24,8 +24,9 @@ export default new Vuex.Store({
   actions: {
     createUserListBroadcastListener ({ commit }: { commit: Commit }) {
       this.state.userListBroadcast.onmessage = (message) => {
-        const messageReceived = message.data as keyof UserCounterControlers
-        commit(this.state.userCounterControlers[messageReceived])
+        const notification = message.data.notification as keyof UserCounterControlers
+        const data = message.data.value
+        commit(this.state.userCounterControlers[notification], data)
       }
     }
   },
